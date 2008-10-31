@@ -54,6 +54,7 @@
 
 static int firstPage = 1;
 static int lastPage = 0;
+static int dpi = 72;
 static GBool rawOrder = gTrue;
 GBool printCommands = gTrue;
 static GBool printHelp = gFalse;
@@ -87,6 +88,8 @@ static const ArgDesc argDesc[] = {
    "last page to convert"},
   /*{"-raw",    argFlag,     &rawOrder,      0,
     "keep strings in content stream order"},*/
+  {"-dpi",      argInt,     &dpi,      0,
+   "image DPI (defaults to 72)"},
   {"-q",      argFlag,     &errQuiet,      0,
    "don't print any messages or errors"},
   {"-h",      argFlag,     &printHelp,     0,
@@ -316,7 +319,7 @@ int main(int argc, char *argv[]) {
 
   if (htmlOut->isOk())
   {
-    doc->displayPages(htmlOut, firstPage, lastPage, 72, 72, 0,
+    doc->displayPages(htmlOut, firstPage, lastPage, dpi, dpi, 0,
 		      gTrue, gFalse, gFalse);
   	if (!xml)
 	{
@@ -336,7 +339,7 @@ int main(int argc, char *argv[]) {
     psOut = new PSOutputDev(psFileName->getCString(), doc->getXRef(),
 			    doc->getCatalog(), NULL, firstPage, lastPage, psModePS, w, h);
     psOut->setDisplayText(gFalse);
-    doc->displayPages(psOut, firstPage, lastPage, 72, 72, 0,
+    doc->displayPages(psOut, firstPage, lastPage, dpi, dpi, 0,
 		      gTrue, gFalse, gFalse);
     delete psOut;
 
@@ -348,7 +351,7 @@ int main(int argc, char *argv[]) {
     gsCmd->append(" -sDEVICE=");
 	gsCmd->append(gsDevice);
 	gsCmd->append(" -dBATCH -dNOPROMPT -dNOPAUSE -r");
-    sc = GooString::fromInt(static_cast<int>(72*scale));
+    sc = GooString::fromInt(static_cast<int>(dpi*scale));
     gsCmd->append(sc);
     gsCmd->append(" -sOutputFile=");
     gsCmd->append("\"");
