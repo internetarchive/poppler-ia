@@ -506,9 +506,13 @@ void HtmlPage::coalesce() {
     {
 //      printf("yes\n");
       n = str1->len + str2->len;
+
+      addSpace = 0;
+#if 0
       if ((addSpace = horSpace > 0.1 * space)) {
         ++n;
       }
+#endif
       if (addLineBreak) {
         ++n;
       }
