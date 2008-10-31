@@ -496,7 +496,7 @@ void HtmlPage::coalesce() {
 	   ||
 	   (!rawOrder && str2->yMin < str1->yMax)
 	  ) &&
-	  (horSpace > -0.5 * space && horSpace < space)
+	  (horSpace > -0.5 * space && fabs(horSpace) < space && ((str2->text[0] & 0xff) != ' '))
 	 ) ||
        	 (vertSpace >= 0 && vertSpace < 0.5 * space && addLineBreak)
 	) &&
